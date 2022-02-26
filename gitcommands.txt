@@ -11,4 +11,6 @@ git remote remove origin - to remove remote
 
 git remote set-url origin new.git.url/here - to change remote 
 
+git remote -v - to check which remote u use
+
 cd /d d:
