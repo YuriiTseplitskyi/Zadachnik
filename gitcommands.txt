@@ -1,6 +1,14 @@
+start commands
+
 git init
 git add README.md
 git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/YuriiTseplitskyi/Zadachnik.git
 git push -u origin main
+
+git remote remove origin - to remove remote
+
+git remote set-url origin new.git.url/here - to change remote 
+
+cd /d d:
