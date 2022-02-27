@@ -2878,43 +2878,39 @@ void array84()
 
     delete[] a;
 }
-//!Другий коміт
-// void array87()
-// {
-//     int n;
-//     cout << "N1= "; cin>> n;
 
-//     double *a = new double[n];
-//     FillArrayRND(a, n);
-//     cout << "Array a:" << endl;
-//     SortArrayUp(a, n);
-//     a[0] = a[3];
-//     ShowArray(a, n);
+void array87()
+{
+    int n;
+    cout << "N1= "; cin>> n;
 
-//     double *b = new double[n];
+    double *a = new double[n];
+    FillArrayRND(a, n);
+    cout << "Array a:" << endl;
+    SortArrayUp(a, n);
+    a[0] = a[3];
+    ShowArray(a, n);
 
-//      for (int i = 0; i < n; i++)
-//      {
-//          if(a[0]>a[i])
-//              ;
-//      }
-//     //! для першого комміту
+    double *b = new double[n];
 
+     for (int i = 0; i < n; i++)
+     {
+         if(a[0]>a[i])
+             ;
+     }
 
-//     for (int i = n-1; i >=1; i--)
-//     {
-//         a[i - 1] = b[i];
-//     }
+    for (int i = n-1; i >=1; i--)
+    {
+        a[i - 1] = b[i];
+    }
 
-//     a[n - 1] = b[0];
+    a[n - 1] = b[0];
 
-//     cout << "<-------" << endl;
-//     cout << "Changed array a:" << endl;
-//     ShowArray(a, n);
-//     delete[] a;
-// }
-
-//! i want to continue working on this branch
+    cout << "<-------" << endl;
+    cout << "Changed array a:" << endl;
+    ShowArray(a, n);
+    delete[] a;
+}
 
 int main()
 {
