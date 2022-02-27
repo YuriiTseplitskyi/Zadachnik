@@ -14,3 +14,5 @@ git remote set-url origin new.git.url/here - to change remote
 git remote -v - to check which remote u use
 
 cd /d d:
+
+git status
