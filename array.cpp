@@ -172,6 +172,102 @@ void Reverse(T* A,int n,int from=0,int to=-1)
     }
 }
 
+template <class T>
+void RightShift(T *A, int n)
+{
+    for (int i = n-1; i >= 1; i--)
+     {
+         A[i] = A[i-1];
+     }
+
+    A[0] = 0;
+}
+
+template <class T>
+void LeftShift(T *A, int n)
+{
+    for (int i = 1; i < n; i++)
+     {
+         A[i-1] = A[i];
+     }
+
+    A[n-1] = 0;
+}
+
+template <class T>
+void RightShift(T *A, int n,int k)
+{
+   for(int i=0;i<k;i++)
+   {
+       RightShift(A,n);
+   }
+}
+
+template <class T>
+void LeftShift(T *A, int n,int k)
+{
+    for(int i=0;i<k;i++)
+   {
+       LeftShift(A,n);
+   }
+}
+
+template <class T>
+void RightShiftCircle(T *A, int n)
+{
+    T x=A[n-1];
+    RightShift(A,n);
+    A[0]=x;
+}
+
+template <class T>
+void LeftShiftCicle(T *A, int n)
+{
+    T x=A[0];
+    LeftShift(A,n);
+    A[n-1]=x;
+}
+
+template <class T>
+void RightShiftCicle(T *A, int n,int k)
+{
+    for(int i=0;i<k;i++)
+    {
+        RightShiftCircle(A,n);
+    }
+}
+
+template <class T>
+void LeftShiftCicle(T *A, int n,int k)
+{
+    for(int i=0;i<k;i++)
+    {
+        LeftShiftCircle(A,n);
+    }
+}
+
+template <class T>
+void RemoveByIndex(T *&A,int &n,int pos)
+{
+    n--;
+    T *B=new T[n];
+
+    for(int i=0;i<n;i++)
+    {
+        if(i<pos)
+        {
+            B[i]=A[i];
+        }
+        else
+        {
+            B[i]=A[i+1];
+        }
+    }
+
+    delete [] A;
+    A=B;
+}
+
 void arr1()
 {
     const int size=5;
@@ -2509,7 +2605,7 @@ void array75a()
     cout << "Min= " << min << endl;
     cout << "PosMin= " << posMin << endl;
 
-    if(posMin>posMax) swap(posMin,posMax); 
+    if(posMin>posMax) swap(posMin,posMax);
 
     Reverse(a, n1, posMin, posMax + 1);
 
@@ -2532,7 +2628,7 @@ void array76()
     int counter = 0;
     if(a[0]>a[1] )   counter++;
     if(a[n-1]>a[n-2] )  counter++;
-        
+
     for (int i = 1; i < n-1; i++)
     {
         if(a[i-1]<a[i] && a[i]>a[i+1]) counter++;
@@ -2541,7 +2637,7 @@ void array76()
     int *pos = new int[counter];
     int j = 0;
 
-    if(a[0]>a[1] ) 
+    if(a[0]>a[1] )
     {
         pos[j]=0;
         j++;
@@ -2549,14 +2645,14 @@ void array76()
 
     for (int i = 1; i < n-1; i++)
     {
-        if(a[i-1]<a[i] && a[i]>a[i+1]) 
+        if(a[i-1]<a[i] && a[i]>a[i+1])
         {
             pos[j]=i;
             j++;
         }
     }
 
-    if(a[n-1]>a[n-2] ) 
+    if(a[n-1]>a[n-2] )
     {
         pos[j]=n-1;
         j++;
@@ -2569,10 +2665,10 @@ void array76()
         a[localMax] = 0;
         k++;
     }
-    
+
     cout << "Array pos:" << endl;
     ShowArray(pos, counter);
-    
+
     cout << "Changed array a:" << endl;
     ShowArray(a, n);
 
@@ -2592,7 +2688,7 @@ void array77()
     int counter = 0;
     if(a[0]>a[1] )   counter++;
     if(a[n-1]>a[n-2] )  counter++;
-        
+
     for (int i = 1; i < n-1; i++)
     {
         if(a[i-1]<a[i] && a[i]>a[i+1]) counter++;
@@ -2601,7 +2697,7 @@ void array77()
     int *pos = new int[counter];
     int j = 0;
 
-    if(a[0]<a[1] ) 
+    if(a[0]<a[1] )
     {
         pos[j]=0;
         j++;
@@ -2609,14 +2705,14 @@ void array77()
 
     for (int i = 1; i < n-1; i++)
     {
-        if(a[i-1]>a[i] && a[i]<a[i+1]) 
+        if(a[i-1]>a[i] && a[i]<a[i+1])
         {
             pos[j]=i;
             j++;
         }
     }
 
-    if(a[n-1]<a[n-2] ) 
+    if(a[n-1]<a[n-2] )
     {
         pos[j]=n-1;
         j++;
@@ -2629,10 +2725,10 @@ void array77()
         a[localMin] = a[localMin]*a[localMin] ;
         k++;
     }
-    
+
     cout << "Array pos:" << endl;
     ShowArray(pos, counter);
-    
+
     cout << "Changed array a:" << endl;
     ShowArray(a, n);
 
@@ -2657,7 +2753,7 @@ void array78()
     {
         b[i] = (a[i - 1] + a[i] + a[i + 1]) / 3;
     }
-    
+
     b[n-1] = (a[n-1] + a[n-2]) / 2;
 
     swap(a, b);
@@ -2666,6 +2762,7 @@ void array78()
     ShowArray(a, n);
 
     delete[] a;
+    delete[] b;
 }
 
 void array79()
@@ -2678,26 +2775,14 @@ void array79()
     cout << "Array a:" << endl;
     ShowArray(a, n);
 
-    double *b = new double[n];
+//     for (int i = n-1; i >= 1; i--)
+//     {
+//         a[i] = a[i-1];
+//     }
+//
+//    a[0] = 0;
 
-    for (int i = 0; i < n; i++)
-    {
-        b[i] = a[i];
-    }
-    
-    // for (int i = n-2; i >= 1; i--)
-    // {
-    //     a[i] = b[i - 1];
-    // }
-
-    int j = 0;
-    for (int i = 0; i < n; i++)
-    {
-        a[i+1] = b[j];
-        j++;
-    }
-    
-    a[0] = 0;
+    LeftShift(a,n);
 
     cout << "------->" << endl;
     cout << "Changed array a:" << endl;
@@ -2729,7 +2814,7 @@ void array80()
         a[i] = b[j+1];
         j++;
     }
-    
+
     a[n-1] = 0;
     cout << "<-------" << endl;
     cout << "Changed array a:" << endl;
@@ -2751,25 +2836,27 @@ void array81()
     int k;
     cout << "K= ";cin>>k;
 
-    double *b = new double[n];
+//    double *b = new double[n];
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        b[i] = a[i];
+//    }
+//
+//    for (int i = 0; i < k; i++)
+//    {
+//        a[i] = 0;
+//    }
+//
+//    int j = 0;
+//    for (int i = k; i < n; i++)
+//    {
+//        a[i] = b[j];
+//        j++;
+//    }
 
-    for (int i = 0; i < n; i++)
-    {
-        b[i] = a[i];
-    }
+    RightShift(a,n,k);
 
-    for (int i = 0; i < k; i++)
-    {
-        a[i] = 0;
-    }
-
-    int j = 0;
-    for (int i = k; i < n; i++)
-    {
-        a[i] = b[j];
-        j++;
-    }
-    
     cout << "------->" << endl;
     cout << "Changed array a:" << endl;
     ShowArray(a, n);
@@ -2809,7 +2896,7 @@ void array82()//!//!
         j++;
     }
 
-    
+
     cout << "<-------" << endl;
     cout << "Changed array a:" << endl;
     ShowArray(a, n);
@@ -2827,19 +2914,21 @@ void array83()
     cout << "Array a:" << endl;
     ShowArray(a, n);
 
-    double *b = new double[n];
+//    double *b = new double[n];
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        b[i] = a[i];
+//    }
+//
+//    for (int i = 1; i < n; i++)
+//    {
+//        a[i] = b[i - 1];
+//    }
+//
+//    a[0] = b[n - 1];
 
-    for (int i = 0; i < n; i++)
-    {
-        b[i] = a[i];
-    }
-
-    for (int i = 1; i < n; i++)
-    {
-        a[i] = b[i - 1];
-    }
-
-    a[0] = b[n - 1];
+    RightShiftCircle(a,n);
 
     cout << "------->" << endl;
     cout << "Changed array a:" << endl;
@@ -2879,6 +2968,28 @@ void array84()
     delete[] a;
 }
 
+void array85()
+{
+    int n;
+    cout << "N1= "; cin>> n;
+
+    double *a = new double[n];
+    FillArrayRND(a, n);
+    cout << "Array a:" << endl;
+    ShowArray(a, n);
+
+    int k;
+    cout<<"K= ";cin>>k;
+
+    RightShiftCicle(a,n,k);
+
+    cout << "<-------" << endl;
+    cout << "Changed array a:" << endl;
+    ShowArray(a, n);
+
+    delete[] a;
+}
+
 void array87()
 {
     int n;
@@ -2888,27 +2999,89 @@ void array87()
     FillArrayRND(a, n);
     cout << "Array a:" << endl;
     SortArrayUp(a, n);
-    a[0] = a[3];
+    a[0]=7;
     ShowArray(a, n);
 
-    double *b = new double[n];
-
-     for (int i = 0; i < n; i++)
-     {
-         if(a[0]>a[i])
-             ;
-     }
-
-    for (int i = n-1; i >=1; i--)
+    for(int i=1;i<n;i++)
     {
-        a[i - 1] = b[i];
+        if(a[i-1]>a[i]) swap(a[i-1],a[i]);
     }
-
-    a[n - 1] = b[0];
 
     cout << "<-------" << endl;
     cout << "Changed array a:" << endl;
     ShowArray(a, n);
+    delete[] a;
+}
+
+void array88()
+{
+    int n;
+    cout << "N1= "; cin>> n;
+
+    double *a = new double[n];
+    FillArrayRND(a, n);
+    cout << "Array a:" << endl;
+    SortArrayUp(a, n);
+    a[n-1]=7;
+    ShowArray(a, n);
+
+    for(int i=n-1;i>0;i--)
+    {
+        if(a[i-1]>a[i]) swap(a[i-1],a[i]);
+    }
+
+    cout << "<-------" << endl;
+    cout << "Changed array a:" << endl;
+    ShowArray(a, n);
+    delete[] a;
+}
+
+void array89()
+{
+    int n;
+    cout << "N1= "; cin>> n;
+
+    double *a = new double[n];
+    FillArrayRND(a, n);
+    cout << "Array a:" << endl;
+    SortArrayUp(a, n);
+    a[rand()%n]=7;
+    ShowArray(a, n);
+
+    for(int i=n-1;i>0;i--)
+    {
+        if(a[i-1]>a[i]) swap(a[i-1],a[i]);
+    }
+
+    for(int i=1;i<n;i++)
+    {
+        if(a[i-1]>a[i]) swap(a[i-1],a[i]);
+    }
+
+    cout << "<-------" << endl;
+    cout << "Changed array a:" << endl;
+    ShowArray(a, n);
+    delete[] a;
+}
+
+void array90()
+{
+    int n;
+    cout << "N1= "; cin>> n;
+
+    double *a = new double[n];
+    FillArrayRND(a, n);
+    cout << "Array a:" << endl;
+    ShowArray(a,n);
+
+    int k;
+    cout<<"K= ";cin>>k;
+
+    RemoveByIndex(a,n,k);
+
+    cout << "Array a:" << endl;
+    ShowArray(a,n);
+
     delete[] a;
 }
 
@@ -2917,7 +3090,7 @@ int main()
     srand(time(NULL));
     cout.setf(ios::boolalpha);
 
-    array84();
+    array90();
 
     return 0;
 }
