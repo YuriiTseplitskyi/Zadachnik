@@ -1,13 +1,13 @@
 #include <iostream>
 #include <cmath>
- 
+
 using namespace std;
 
 int fact(int n)
 {
     if(n==0)   return 0;
     if(n==1)   return 1;
-    
+
     return n * (fact(n - 1));
 }
 
@@ -66,7 +66,7 @@ void PrevDate(int &d,int &m,int &y)
     {
         d--;
     }
-    else 
+    else
     {
         m--;
         if (m == 0)
@@ -168,10 +168,52 @@ void while17()
     }
 }
 
+template<class T>
+void FillArrayRND(T* A,int n,int from=0,int to=11)
+{
+    for (int i = 0; i < n ;i++)
+    {
+        A[i]=(from*100+rand()%((to-from)*100))/100.0;
+    }
+}
+
+template<class T>
+void ShowArray(T* A,int n)
+{
+    for (int i = 0; i < n ;i++)
+    {
+        cout << A[i] << " " ;
+    }
+    cout<<endl;
+}
+
+void SearchInArray()
+{
+    int n;
+    cout << "N= ";cin>>n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n);
+    cout << "Array A:" << endl;
+    ShowArray(A, n);
+
+    int counter = 0;
+    for (int i = 0; i < n-1; i++)
+    {
+        for (int j = i+1; j < n; j++)
+        {
+            if(A[i]>A[j])
+                counter++;
+        }
+    }
+
+    delete[] A;
+}
+
 int main()
 {
     cout.setf(ios::boolalpha);
-    
+
     // double k = 5;
     // int n = 5;
     // double sum1 = k / 10;
@@ -179,8 +221,5 @@ int main()
     // cout << sum1 << endl;
     // cout << sum2 << endl;
 
-    double n = 2;
-    n = 1 / n;
-   
-    cout << 5/2;
+    //SearchInArray();
 }

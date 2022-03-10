@@ -221,7 +221,7 @@ void RightShiftCircle(T *A, int n)
 }
 
 template <class T>
-void LeftShiftCicle(T *A, int n)
+void LeftShiftCircle(T *A, int n)
 {
     T x=A[0];
     LeftShift(A,n);
@@ -229,7 +229,7 @@ void LeftShiftCicle(T *A, int n)
 }
 
 template <class T>
-void RightShiftCicle(T *A, int n,int k)
+void RightShiftCircle(T *A, int n,int k)
 {
     for(int i=0;i<k;i++)
     {
@@ -238,7 +238,7 @@ void RightShiftCicle(T *A, int n,int k)
 }
 
 template <class T>
-void LeftShiftCicle(T *A, int n,int k)
+void LeftShiftCircle(T *A, int n,int k)
 {
     for(int i=0;i<k;i++)
     {
@@ -265,8 +265,18 @@ void RemoveByIndex(T *&A,int &n,int pos)
     }
 
     delete [] A;
-    A=B;
+    A = B;
 }
+
+template <class T>
+void RemoveByIndexFromTo(T *&A,int &n, int from,int to)
+{
+    for (int i = from; i < to; i++)
+    {
+        RemoveByIndex(A, n, i);
+    }
+    
+} 
 
 void arr1()
 {
@@ -2981,7 +2991,7 @@ void array85()
     int k;
     cout<<"K= ";cin>>k;
 
-    RightShiftCicle(a,n,k);
+    RightShiftCircle(a,n,k);
 
     cout << "<-------" << endl;
     cout << "Changed array a:" << endl;
@@ -3085,12 +3095,312 @@ void array90()
     delete[] a;
 }
 
+void array91()
+{
+    int n;
+    cout << "N1= "; cin>> n;
+
+    double *a = new double[n];
+    FillArrayRND(a, n);
+    cout << "Array a:" << endl;
+    ShowArray(a,n);
+
+    int k, l;
+    cout << "1 <= K <= L <= N" << endl;
+    cout << "K= ";cin>>k;
+    cout << "L= ";cin>>l;
+
+    RemoveByIndexFromTo(a, n,k,l);
+    cout << "Array a:" << endl;
+    ShowArray(a,n);
+
+    delete[] a;
+}
+
+void array92()
+{
+    int n1;
+    cout << "N1= "; cin>> n1;
+
+    int *A = new int[n1];
+    FillArrayRND(A, n1);
+    cout << "Array A:" << endl;
+    ShowArray(A,n1);
+
+    int n2=0;
+    for (int i = 0; i < n1; i++)
+    {
+        if(A[i]%2==0)
+            n2++;
+    }
+
+    cout << "N2= " << n2 << endl;
+    int *B = new int[n2];
+    int k = 0;
+    for (int i = 0; i < n1; i++)
+    {
+        if(A[i]%2==0)
+        {
+            B[k] = A[i];
+            k++;
+        }
+    }
+
+    delete[] A;
+    A = B;
+
+    cout << "Array A:" << endl;
+    ShowArray(A,n2);
+
+    delete[] A;
+}
+
+void array93()
+{
+    int n1;
+    cout << "N1= "; cin>> n1;
+
+    int *A = new int[n1];
+    FillArrayRND(A, n1);
+    cout << "Array A:" << endl;
+    ShowArray(A,n1);
+
+    int n2=n1/2;
+    if(n1%2!=0)
+        n2++;
+
+    cout << "N2= " << n2 << endl;
+    int *B = new int[n2];
+    int k = 0;
+    for (int i = 0; i < n1+1; i+=2)
+    {
+        B[k] = A[i];
+        k++;
+    }
+
+    delete[] A;
+    A = B;
+
+    cout << "Array A:" << endl;
+    ShowArray(A,n2);
+
+    delete[] A;
+}
+
+void array94()
+{
+    int n1;
+    cout << "N1= "; cin>> n1;
+
+    int *A = new int[n1];
+    FillArrayRND(A, n1);
+    cout << "Array A:" << endl;
+    ShowArray(A,n1);
+
+    int n2=n1/2-1;
+    if(n1%2==0)
+        n2++;
+
+    cout << "N2= " << n2 << endl;
+    int *B = new int[n2];
+    int k = 0;
+    for (int i = 1; i < n1+1; i+=2)
+    {
+        B[k] = A[i];
+        k++;
+    }
+
+    delete[] A;
+    A = B;
+
+    cout << "Array A:" << endl;
+    ShowArray(A,n2);
+
+    delete[] A;
+}
+
+void array95()
+{
+    int n1;
+    cout << "N1= "; cin>> n1;
+
+    int *A = new int[n1];
+    //FillArrayRND(A, n1);
+    for (int i = 0; i < n1; i++)
+    {
+        cin >> A[i];
+    }
+    
+    cout << "Array A:" << endl;
+    ShowArray(A,n1);
+
+    int n2 = 0;
+    for (int i = 0; i < n1-1; i++)
+    {
+        if(A[i]!=A[i+1])
+            n2++;
+    }
+    n2++;
+
+    int j = 0;
+    int *B = new int[n2];
+    for (int i = 0; i < n1; i++)
+    {
+        if(A[i]!=A[i+1])
+        {
+            B[j] = A[i];
+            j++;
+        }
+    }
+    
+    delete [] A;
+    A = B;
+
+    cout << "N2= " << n2 << endl;
+    cout << "Array A:" << endl;
+    ShowArray(A,n2);
+
+    delete[] A;
+}
+
+void array96()
+{
+    int n1;
+    cout << "N1= "; cin>> n1;
+
+    int *A = new int[n1];
+    FillArrayRND(A, n1);
+    // for (int i = 0; i < n1; i++)
+    // {
+    //     cin >> A[i];
+    // }
+    
+    cout << "Array A:" << endl;
+    ShowArray(A,n1);
+
+    int n2 = 0;
+    for (int i = 0; i < n1; i++)
+    {
+        bool ok = true;
+        for (int j = 0; j < i; j++)
+        {
+            int a = A[i];
+            int b = A[j];
+            if(A[i]==A[j])
+            {
+               ok = false;
+               break;
+            } 
+        }
+        if(ok)n2++;
+    }
+
+    int *B = new int[n2];
+    int k = 0;
+    for (int i = 0; i < n1; i++)
+    {
+        bool ok = true;
+        for (int j = 0; j < i; j++)
+        {
+            int a = A[i];
+            int b = A[j];
+            if(A[i]==A[j])
+            {
+               ok = false;
+               //RemoveByIndex(A, n1, i);
+               B[k] = A[i];
+               break;
+            } 
+        }
+    }
+
+    // delete [] A;
+    // A = B;
+
+    cout << "N2= " << n2 << endl;
+    cout << "Array A:" << endl;
+    ShowArray(B,n2);
+
+    delete[] A;
+}
+
+void array96a()
+{
+    int n1;
+    cout << "N1= "; cin>> n1;
+
+    int *A = new int[n1];
+    FillArrayRND(A, n1);
+    cout << "Array A:" << endl;
+    ShowArray(A,n1);
+
+    int n2 = 0;
+    for (int i = 0; i < n1; i++)
+    {
+        bool ok = true;
+        for (int j = 0; j < i; j++)
+        {
+            int a = A[i];
+            int b = A[j];
+            if(A[i]==A[j])
+            {
+               ok = false;
+               break;
+            } 
+        }
+        if(ok)n2++;
+    }
+
+    int *B = new int[n2];
+    int k = 0;
+    for (int i = 0; i < n1; i++)
+    {
+        bool ok = true;
+        for (int j = i+1; j < n1; j++)
+        {
+            int a = A[i];
+            int b = A[j];
+            if(A[i]==A[j])
+            {
+                ok = false;
+                B[k] = A[i];
+                k++;
+                break;
+            }
+        }
+        if(ok) 
+        {
+            B[k] = A[i];
+            k++;
+        }
+    }
+
+    for (int i = 0; i < n2-1; i++)
+    {
+        for (int j = i+1; j < n2; j++)
+        {
+            if(B[i]==B[j])
+                RemoveByIndex(B, n2, j);
+        }
+        
+    }
+
+    delete[] A;
+    A = B;
+
+    cout << "N2= " << n2 << endl;
+    cout << "Array A:" << endl;
+    ShowArray(A,n2);
+    
+    delete[] A;
+}
+
 int main()
 {
     srand(time(NULL));
     cout.setf(ios::boolalpha);
 
-    array90();
+    array96a();
 
     return 0;
 }
