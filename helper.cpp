@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
 
 using namespace std;
 
@@ -187,6 +188,128 @@ void ShowArray(T* A,int n)
     cout<<endl;
 }
 
+template <class T>
+void RemoveByIndex(T *&A,int &n,int pos)
+{
+    n--;
+    T *B=new T[n];
+
+    for(int i=0;i<n;i++)
+    {
+        if(i<pos)
+        {
+            B[i]=A[i];
+        }
+        else
+        {
+            B[i]=A[i+1];
+        }
+    }
+
+    delete [] A;
+    A = B;
+}
+
+void Delete()
+{
+    int n = 10;
+    int *A = new int[n];
+    FillArrayRND(A, n);
+    ShowArray(A, n);
+
+    int pos1;
+    cout << "Pos1= ";cin>>pos1;
+
+    n--;
+    int *B = new int[n];
+    for (int i = 0; i < n; i++)
+    {
+        if(i<pos1)
+        {
+            B[i] = A[i];
+        }
+        else
+        {
+            B[i] = A[i + 1];
+        }
+    }
+
+    delete[] A;
+    A = B;
+    ShowArray(A, n);
+
+    int pos2;
+    cout << "Pos2= ";cin>>pos2;
+
+    n++;
+    int *C = new int[n];
+    for (int i = 0; i < n; i++)
+    {
+        if(i<pos2)
+        {
+            C[i] = A[i];
+        }
+        else
+        {
+            C[i+1] = A[i];
+        }
+    }
+
+    C[pos2] = 100;
+
+    delete[] A;
+    A = C;
+
+    ShowArray(A, n);
+
+    delete[] A;
+}
+
+template <class T>
+void RemoveByIndexFromTo(T *&A,int &n, int from,int to)
+{
+    for (int i = to; i > from; i--)
+    {
+        RemoveByIndex(A, n, i);
+    }
+
+}
+
+template <class T>
+void Remove(T *&A,int &n, int pos,int count)
+{
+    if(pos<0)return;
+    for(int i=0;i<count;i++)
+    {
+        if(pos>=n)break;
+        RemoveByIndex(A,n,pos);
+    }
+}
+
+template <class T>
+void InsertByIndex(T *&A,int &n,int pos,T x)
+{
+    T *B=new T[n+1];
+
+    for(int i=0;i<n;i++)
+    {
+        if(i<pos)
+        {
+            B[i]=A[i];
+        }
+        else
+        {
+            B[i+1]=A[i];
+        }
+    }
+
+    B[pos]=x;
+    n++;
+
+    delete [] A;
+    A = B;
+}
+
 void SearchInArray()
 {
     int n;
@@ -213,6 +336,7 @@ void SearchInArray()
 int main()
 {
     cout.setf(ios::boolalpha);
+    srand(time(NULL));
 
     // double k = 5;
     // int n = 5;
@@ -221,5 +345,5 @@ int main()
     // cout << sum1 << endl;
     // cout << sum2 << endl;
 
-    //SearchInArray();
+    Delete();
 }
