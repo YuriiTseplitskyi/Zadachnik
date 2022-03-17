@@ -322,6 +322,61 @@ void Insert(T *&A,int &n,int pos,int count,T x)
     }
 }
 
+int GetSeriesCount(int *A,int n)
+{
+    int count=1;
+    for(int i=1;i<n;i++)
+    {
+        if(A[i-1]!=A[i])
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+int GetSeriesPos(int *A,int n,int serNo)
+{
+    if(serNo==0) return 0;
+
+    int count=0;
+    for(int i=1;i<n;i++)
+    {
+        if(A[i-1]!=A[i])
+        {
+            count++;
+            if(count==serNo) return i;
+        }
+    }
+    return -1;
+}
+
+int GetSeriesVal(int *A,int n,int serNo)
+{
+    int pos=GetSeriesPos(A,n,serNo);
+    return A[pos];
+}
+
+int GetSeriesLen(int *A,int n,int serNo)
+{
+    int pos=GetSeriesPos(A,n,serNo);
+    if(pos==-1)return 0;
+    int count=0;
+    for(int i=pos;i<n;i++)
+    {
+        if(A[i]==A[pos])
+        {
+            count++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return count;
+}
+
 void arr1()
 {
     const int size=5;
@@ -3576,7 +3631,6 @@ void array103()
             posMin = i;
         }
     }
-    InsertByIndex(A,n1,posMin,0.0);
 
     double max = A[0];
     int posMax = 0;
@@ -3588,11 +3642,19 @@ void array103()
             posMax = i;
         }
     }
-    InsertByIndex(A,n1,posMax+1,0.0);
+
+    InsertByIndex(A,n1,posMin,0.0);
+    if(posMin<posMax)
+    {
+        InsertByIndex(A,n1,posMax+2,0.0);
+    }
+    else
+    {
+        InsertByIndex(A,n1,posMax+1,0.0);
+    }
 
     cout << "Max= " << max << endl;
     cout << "Min= " << min << endl;
-
     cout << "Array A:" << endl;
     ShowArray(A,n1);
     delete[] A;
@@ -3923,52 +3985,121 @@ void array115()
 
 void array116()
 {
-    int n1;
-    cout << "N1= "; cin>> n1;
+    int n;
+    cout << "n= "; cin>> n;
 
-    int *A = new int[n1];
-    FillArrayRND(A, n1,1,15);
-    A[1] = A[2];
-    A[n1 - 2] = A[n1 - 1];
-    cout << "Array A:" << endl;
-    ShowArray(A,n1);
+    int *A = new int[n];
+    FillArrayRND(A, n,1,5);
+    ShowArray(A,n);
 
-    int n2 = n1;
-    int *B = new int[n2];
-    // int *C = new int[n2];
+    int N=GetSeriesCount(A,n);
+    cout<<"N= "<<N<<endl;
 
-    int j = 0;
-    B[0] = 1;
-    //C[0] = A[0];
-    for (int i = 1; i<n1; i++)
+    int *B=new int[N];
+    int *C=new int[N];
+
+    for(int i=0;i<N;i++)
     {
-        if(A[i]==A[i+1])
-        {
-            B[j] += 1;
-            RemoveByIndex(A, n1, i);
-        }
-        else
-        {
-            j++;
-            B[j] = 1;
-            //C[j] = A[i];
-        }
+        B[i]=GetSeriesLen(A,n,i);
+        C[i]=GetSeriesVal(A,n,i);
     }
-    j++;
 
-    int *C = new int[j];
-    delete[] C;
-    C = A;
-
-    cout << "\nArray B:" << endl;
-    ShowArray(B,j);
-
-    cout << "\nArray C:" << endl;
-    ShowArray(C,j);
+    ShowArray(B,N);
+    ShowArray(C,N);
 
     delete[] A;
     delete[] B;
     delete[] C;
+}
+
+void array117()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,-5,5);
+    ShowArray(A,n);
+
+    int N=GetSeriesCount(A,n);
+    cout<<"N= "<<N<<endl;
+
+    for(int i=N-1;i>=0;i--)
+    {
+        int pos=GetSeriesPos(A,n,i);
+        InsertByIndex(A,n,pos,0);
+    }
+
+    ShowArray(A,n);
+    delete[] A;
+}
+
+void array119()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,-5,5);
+    ShowArray(A,n);
+
+    int N=GetSeriesCount(A,n);
+    cout<<"N= "<<N<<endl;
+
+    for(int i=0;i<N;i++)
+    {
+        int pos=GetSeriesPos(A,n,i);
+        InsertByIndex(A,n,pos,A[pos]);
+    }
+
+    ShowArray(A,n);
+    delete[] A;
+}
+
+void array120()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,-5,5);
+    ShowArray(A,n);
+
+    int N=GetSeriesCount(A,n);
+    cout<<"N= "<<N<<endl;
+
+    for(int i=N-1;i>=0;i--)
+    {
+        int pos=GetSeriesPos(A,n,i);
+        RemoveByIndex(A,n,pos);
+    }
+
+    ShowArray(A,n);
+    delete[] A;
+}
+
+void array121()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,-2,5);
+    ShowArray(A,n);
+
+    int k;
+    cout << "k= "; cin>> k;
+
+    int pos=GetSeriesPos(A,n,k);
+    int len=GetSeriesLen(A,n,k);
+
+    for(int i=0;i<len;i++)
+    {
+        InsertByIndex(A,n,pos,A[pos]);
+    }
+
+    ShowArray(A,n);
+    delete[] A;
 }
 
 int main()
@@ -3976,7 +4107,7 @@ int main()
     srand(time(NULL));
     cout.setf(ios::boolalpha);
 
-    array100();
+    array121();
 
     return 0;
 }

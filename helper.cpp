@@ -345,5 +345,17 @@ int main()
     // cout << sum1 << endl;
     // cout << sum2 << endl;
 
-    Delete();
+    //Delete();
+
+    // int *a = new int[5];
+    // a[0] = 100;
+    // cout << a << endl;
+    // delete[] a;
+    // //a = NULL;
+    // a = nullptr;
+    // cout << a << endl;
+
+    // a = new int[10];
+    // cout << a << endl;
+
 }
