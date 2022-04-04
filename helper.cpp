@@ -333,10 +333,25 @@ void SearchInArray()
     delete[] A;
 }
 
+void find_execution_time(clock_t start, clock_t end)
+{
+    double time = (double)(end - start) / CLOCKS_PER_SEC;
+    cout << "Execution time: " << time << " seconds" << endl;
+}
+
+// write function that sorts array up
+    
+
 int main()
 {
     cout.setf(ios::boolalpha);
     srand(time(NULL));
+
+    for (int i = 0; i < 10; i++)
+    {
+        cout << rand()%10 << endl;
+    }
+    
 
     // double k = 5;
     // int n = 5;
@@ -358,4 +373,13 @@ int main()
     // a = new int[10];
     // cout << a << endl;
 
+    // int b;
+    // b = 11;
+    // int *pb;
+    // pb = &b;
+    // cout << *pb << endl;
+    // b++;
+    // pb++;
+    // cout << *pb << endl;
+    
 }

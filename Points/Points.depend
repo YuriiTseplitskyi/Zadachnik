@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1649092161 source:d:\programming\projects\vs\zadachnik\point.cpp
+	"point.h"
+	<sstream>
+	<time.h>
+	<stdlib.h>
+	<cmath>
+
+1649092161 d:\programming\projects\vs\zadachnik\point.h
+	<iostream>
+	<string>
+
+1648657315 source:d:\programming\projects\vs\zadachnik\points\main.cpp
+
+1649092381 source:d:\programming\projects\vs\zadachnik\array.cpp
+	"point.h"
+	<ctime>
+	<math.h>
+	<algorithm>
+	<iostream>
+

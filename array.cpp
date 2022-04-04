@@ -1,7 +1,8 @@
-#include <iostream>
+#include "point.h"
 #include <ctime>
 #include <math.h>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -13,7 +14,6 @@ void FillArrayRND(T* A,int n,int from=0,int to=11)
         A[i]=(from*100+rand()%((to-from)*100))/100.0;
     }
 }
-
 
 void FillArrayTransposition(int *A,int n)
 {
@@ -175,10 +175,10 @@ void Reverse(T* A,int n,int from=0,int to=-1)
 template <class T>
 void RightShift(T *A, int n)
 {
-    for (int i = n-1; i >= 1; i--)
-     {
-         A[i] = A[i-1];
-     }
+    for (int i = n - 1; i >= 1; i--)
+    {
+        A[i] = A[i - 1];
+    }
 
     A[0] = 0;
 }
@@ -187,29 +187,29 @@ template <class T>
 void LeftShift(T *A, int n)
 {
     for (int i = 1; i < n; i++)
-     {
-         A[i-1] = A[i];
-     }
+    {
+        A[i - 1] = A[i];
+    }
 
-    A[n-1] = 0;
+    A[n - 1] = 0;
 }
 
 template <class T>
-void RightShift(T *A, int n,int k)
+void RightShift(T *A, int n, int k)
 {
-   for(int i=0;i<k;i++)
-   {
-       RightShift(A,n);
-   }
+    for (int i = 0; i < k; i++)
+    {
+        RightShift(A, n);
+    }
 }
 
 template <class T>
-void LeftShift(T *A, int n,int k)
+void LeftShift(T *A, int n, int k)
 {
-    for(int i=0;i<k;i++)
-   {
-       LeftShift(A,n);
-   }
+    for (int i = 0; i < k; i++)
+    {
+        LeftShift(A, n);
+    }
 }
 
 template <class T>
@@ -377,6 +377,39 @@ int GetSeriesLen(int *A,int n,int serNo)
     return count;
 }
 
+void RemoveSeries(int *&A,int &n,int serNo)
+{
+    int pos=GetSeriesPos(A, n, serNo);
+    int N = GetSeriesLen(A, n, serNo);
+    for (int i = 0; i < N; i++)
+    {
+        RemoveByIndex(A, n, pos);
+    }
+}
+
+void SwapSeries(int *&A,int n,int serNo1,int serNo2)
+{
+    int *B=new int[n];
+    int N=GetSeriesCount(A,n);
+    int j=0;
+    for(int i=0;i<N;i++)
+    {
+        int k=i;
+        if(i==serNo1)k=serNo2;
+        if(i==serNo2)k=serNo1;
+
+        int pos=GetSeriesPos(A,n,k);
+        int len=GetSeriesLen(A,n,k);
+
+        for(int w=0;w<len;w++)
+        {
+            B[j++]=A[pos];
+        }
+    }
+    delete[] A;
+    A=B;
+}
+
 void arr1()
 {
     const int size=5;
@@ -393,7 +426,6 @@ void arr1()
     {
         cout << arr[i] << endl;
     }
-
 }
 
 void arr12()
@@ -1010,7 +1042,8 @@ void array24()
 
     int diff = abs(arr[1] - arr[0]);
     bool ok=true;
-    for (int i = 0; i < n;i++)
+    int i;
+    for (i = 0; i < n;i++)
     {
         int tempDiff=abs(arr[i++]-arr[i]);
 
@@ -1248,6 +1281,7 @@ void array32()
             break;
         }
     }
+    cout<<result<<endl;
     delete[] arr;
 }
 
@@ -3414,8 +3448,6 @@ void array97()
         bool ok = true;
         for (int j = i+1; j < n1; j++)
         {
-            int a = A[i];
-            int b = A[j];
             if(A[i]==A[j])
             {
                 ok = false;
@@ -3752,7 +3784,6 @@ void array108()
     cout << "Array A:" << endl;
     ShowArray(A,n1);
 
-    int n2 = 0;
     for (int i = n1-1; i >=0; i--)
     {
         if(A[i]>0)
@@ -3822,7 +3853,6 @@ void array111()
     cout << "Array A:" << endl;
     ShowArray(A,n1);
 
-    int n2 = 0;
     for (int i = n1-1; i >=0; i--)
     {
         if(A[i]%2!=0)
@@ -4084,7 +4114,7 @@ void array121()
     cout << "n= "; cin>> n;
 
     int *A = new int[n];
-    FillArrayRND(A, n,-2,5);
+    FillArrayRND(A, n,1,6);
     ShowArray(A,n);
 
     int k;
@@ -4102,13 +4132,416 @@ void array121()
     delete[] A;
 }
 
+void array122()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,1,4);
+    ShowArray(A,n);
+
+    int num = GetSeriesCount(A, n);
+    cout << "Series count= " << num << endl;
+
+    bool start = true;
+
+    while (start)
+    {
+        int k;
+        cout << "k= "; cin >> k;
+
+        if (k >= num || k<0)
+        {
+            start = false;
+        }
+        else
+        {
+            RemoveSeries(A,n,k);
+            num--;
+            cout << "Series count= " << num << endl;
+            ShowArray(A, n);
+        }
+    }
+
+   cout << "Final Array A:" << endl;
+   ShowArray(A, n);
+   delete[] A;
+}
+
+void array123()// 124
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,1,4);
+    ShowArray(A,n);
+
+    int k1,k2;
+    cout << "K1= "; cin>> k1;
+    cout << "K2= "; cin>> k2;
+
+    SwapSeries(A,n,k1,k2);
+
+   cout << "Final Array A:" << endl;
+   ShowArray(A, n);
+   delete[] A;
+}
+
+void array125()//126,127
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,1,4);
+    ShowArray(A,n);
+
+    int num = GetSeriesCount(A, n);
+    cout << "Series count= " << num << endl;
+
+    int l;
+    cout << "L= ";cin>>l;
+    cout << endl;
+
+    for (int i = num-1; i >= 0; i--)
+    {
+        int len=GetSeriesLen(A,n,i);
+        if(len<l)
+        {
+            int pos=GetSeriesPos(A,n,i);
+            RemoveSeries(A,n,i);
+            InsertByIndex(A,n,pos,0);
+        }
+    }
+
+   cout << "\nFinal Array A:" << endl;
+   ShowArray(A, n);
+   delete[] A;
+}
+
+void array128()//129,130
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    int *A = new int[n];
+    FillArrayRND(A, n,1,4);
+    ShowArray(A,n);
+
+    int num = GetSeriesCount(A, n);
+    cout << "Series count= " << num << endl;
+
+    int maxLen=1;
+    for(int i=0;i<num;i++)
+    {
+        int len=GetSeriesLen(A,n,i);
+        if(len>maxLen)maxLen=len;
+    }
+
+    for(int i=0;i<num;i++)
+    {
+        int len=GetSeriesLen(A,n,i);
+        if(len==maxLen)
+        {
+            int pos=GetSeriesPos(A,n,i);
+            InsertByIndex(A,n,pos,A[pos]);
+            break;
+        }
+    }
+
+   cout << "\nFinal Array A:" << endl;
+   ShowArray(A, n);
+   delete[] A;
+}
+
+void array131()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+    Point B=Point::createFromKBD();
+    cout<<B<<endl;
+
+    Point nearest=A[0];
+    double minDist=Point::getDistance(nearest,B);
+    for(int i=0;i<n;i++)
+    {
+        double dist=Point::getDistance(A[i],B);
+        if(dist<minDist)
+        {
+            minDist=dist;
+            nearest=A[i];
+        }
+    }
+
+    cout<<nearest<<endl;
+    cout<<"MinDist= "<<minDist<<endl;
+    delete[] A;
+
+    //double minDist=nearest.getDistance(B);
+    //B.readFromKBD();
+    //cout<<B<<endl;
+}
+
+void array132()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+
+    Point zero;
+    cout<<zero<<endl;
+
+    Point farthest(0, 0);
+    double maxDist = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i].getQuarter()==2)
+        {
+            double dist = Point::getDistance(A[i], zero);
+            if (dist > maxDist)
+            {
+                maxDist = dist;
+                farthest = A[i];
+            }
+        }
+    }
+
+    cout<<"Farthest= "<<farthest<<endl;
+    cout<<"MaxDist= "<<maxDist<<endl;
+
+    delete[] A;
+}
+
+void array133()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+
+    Point zero;
+    cout<<zero<<endl;
+
+    Point nearest (0, 0);
+    double minDist = 0;
+    bool first=true;
+    for (int i = 0; i < n; i++)
+    {
+        int quater=A[i].getQuarter();
+
+        if (quater==1 || quater==3)
+        {
+            double dist = Point::getDistance(A[i], zero);
+            if(first)
+            {
+                minDist=dist;
+                nearest=A[i];
+                first=false;
+            }
+            else if (dist < minDist)
+            {
+                minDist = dist;
+                nearest = A[i];
+            }
+        }
+    }
+
+    cout<<"Nearest= "<<nearest<<endl;
+    cout<<"MinDist= "<<minDist<<endl;
+    delete[] A;
+}
+
+void array134()
+{
+    int n;
+    cout << "n= "; cin>> n;
+
+    Point *A = Point::createArray(n);
+    //ShowArray(A,n);
+
+    Point a=A[0];
+    Point b=A[1];
+    double maxDist=Point::getDistance(a, b);
+    for(int i=0;i<n-1;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+            double dist=Point::getDistance(A[i],A[j]);
+            if(dist>maxDist)
+            {
+                a=A[i];
+                b=A[j];
+                maxDist=dist;
+            }
+        }
+    }
+
+    cout<<"Point a= "<<a<<endl;
+    cout<<"Point b= "<<b<<endl;
+
+    delete[] A;
+}
+void array135()
+{
+    int n1;
+    cout << "n1= "; cin>> n1;
+    cout<<"Array A:"<<endl;
+    Point *A = Point::createArray(n1);
+    ShowArray(A,n1);
+
+    int n2;
+    cout << "n2= "; cin>> n2;
+    cout<<"Array B:"<<endl;
+    Point *B = Point::createArray(n2);
+    ShowArray(B,n2);
+
+    Point a=A[0];
+    Point b=B[0];
+    double minDist=Point::getDistance(a,b);
+    for(int i=0;i<n1;i++)
+    {
+        for(int j=0;j<n2;j++)
+        {
+            double dist=Point::getDistance(A[i],B[j]);
+            if(dist<minDist)
+            {
+                minDist=dist;
+                a=A[i];
+                b=B[j];
+            }
+        }
+    }
+
+
+    cout<<"Point a: "<<a<<endl;
+    cout<<"Point b: "<<b<<endl;
+
+    delete[] A;
+    delete[] B;
+}
+
+void array136()
+{
+    int n;
+    cout << "n= "; cin>> n;
+    cout<<"Array A:"<<endl;
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+
+    Point point=A[0];
+    double minSum=Point::getSumDistances(A[0],A,n);
+    for(int i=0;i<n;i++)
+    {
+        double sum=Point::getSumDistances(A[i],A,n);
+        cout<<sum<<endl;
+        if(sum<minSum)
+        {
+            minSum=sum;
+            point=A[i];
+        }
+    }
+
+    cout<<"Min: "<<point<<endl;
+    cout<<"MinSum= "<<minSum<<endl;
+
+    delete[] A;
+}
+
+void array137()
+{
+    int n;
+    cout << "n= "; cin>> n;
+    cout<<"Array A:"<<endl;
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+
+    Point a=A[0];
+    Point b=A[1];
+    Point c=A[2];
+    double maxArea=Point::getTriangleArea(a,b,c);
+    for(int i=0;i<n-2;i++)
+    {
+        for(int j=i+1;j<n-1;j++)
+        {
+            for(int k=j+1;k<n;k++)
+            {
+                double area=Point::getTriangleArea(A[i],A[j],A[k]);
+                cout<<area<<endl;
+                if(area>maxArea)
+                {
+                    maxArea=area;
+                    a=A[i];
+                    b=A[j];
+                    c=A[k];
+                }
+            }
+        }
+    }
+
+    cout<<"MaxArea= "<<maxArea<<endl;
+    cout<<"A= "<<a<<endl;
+    cout<<"B= "<<b<<endl;
+    cout<<"C= "<<c<<endl;
+
+    delete[] A;
+}
+
+void array139()
+{
+    int n;
+    cout << "n= "; cin>> n;
+    cout<<"Array A:"<<endl;
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+
+    //Point::Sort(A,n,Point::checkTwoPoints);
+    //sort(A,A+n,Point::checkTwoPoints);
+    sort(A,A+n,less<Point>());
+
+    cout<<"Array A:"<<endl;
+    ShowArray(A,n);
+
+    delete[] A;
+}
+
+void array140()
+{
+    int n;
+    cout << "n= "; cin>> n;
+    cout<<"Array A:"<<endl;
+    Point *A = Point::createArray(n);
+    ShowArray(A,n);
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            bool ok=Point::checkTwoPoints(A[i],A[j]);
+            if(ok)swap(A[i],A[j]);
+        }
+    }
+
+    cout<<"Array A:"<<endl;
+    ShowArray(A,n);
+
+    delete[] A;
+}
+
+
 int main()
 {
     srand(time(NULL));
     cout.setf(ios::boolalpha);
 
-    array121();
+    array139();
 
     return 0;
 }
-
